@@ -39,7 +39,7 @@ class BallPit {
             ball.tick();
 
             // Handle the edges (balls don't get a choice here)
-            if (ball.getxPos() + ball.getRadius() > width) {
+            if (ball.getxPos() + ball.getRadius() > width){
                 ball.setxPos(width - ball.getRadius());
                 ball.setxVel(ball.getxVel() * -1);
             }
@@ -65,10 +65,12 @@ class BallPit {
                 if (checkCollision(ball, ballB)) {
 //                    System.out.println("collided");
                     handleCollision(ball, ballB);
+                    ball.setCollide(true);
+                    ballB.setCollide(true);
                 }
             }
 
-            ball.think();
+            ball.think((int) tickCount);
         }
     }
 
