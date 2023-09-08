@@ -2,6 +2,7 @@ package org.example;
 
 import javafx.scene.paint.Paint;
 
+import java.time.Duration;
 import java.util.Random;
 
 public class Ball implements BallThink{
@@ -27,7 +28,7 @@ public class Ball implements BallThink{
         yPos += yVel;
     }
     void setCollide(boolean bool) {this.collide = bool;}
-    boolean getCollide(boolean bool) {return this.collide;}
+    boolean getCollide() {return this.collide;}
 
     void setxVel(double xVel) {
         this.xVel = xVel;
@@ -69,7 +70,9 @@ public class Ball implements BallThink{
         this.yPos = yPos;
     }
 
-    public void think(long tick) {
+    public void think(long currentTick) {
+        boolean freeze = false;
+        long saveTick = 0;
         // Here is where the strategy should have some effect.
         // You can add parameters to the think method so the ball knows something about its
         // world to make decisions with, or you can inject things upon construction for it to query
@@ -77,7 +80,10 @@ public class Ball implements BallThink{
             return;
         }else if(this.colour.equals(Paint.valueOf("PURPLE"))){
           //  PurpleBallThink;
-            PurpleBallThink.freeze(this, tick);
+            if(this.getCollide()){
+                PurpleBallThink.freeze(this);
+            }
+
         }else if(this.colour.equals(Paint.valueOf("ORANGE"))){
             OrangeBallThink.accelerate(this);
         }

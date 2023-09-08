@@ -70,7 +70,7 @@ class BallPit {
                 }
             }
 
-            ball.think((int) tickCount);
+            ball.think(tickCount);
         }
     }
 
