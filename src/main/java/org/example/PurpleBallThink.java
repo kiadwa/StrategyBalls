@@ -12,12 +12,13 @@ public interface PurpleBallThink extends BallThink{
         if(ball.getCollide()) {
             ball.setyVel(0);
             ball.setxVel(0);
-            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
+            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.3));
             pauseTransition.setOnFinished(event -> {
-                ball.setxVel(xVel * 1.7);
-                ball.setyVel(yVel * 1.7);
-                ball.setCollide(false);
+                ball.setxVel(xVel);
+                ball.setyVel(yVel);
+
             });
     }
+        ball.setCollide(false);
 }
 }

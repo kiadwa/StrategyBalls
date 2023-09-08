@@ -73,23 +73,26 @@ public class Ball implements BallThink{
     public void think(long currentTick) {
         boolean freeze = false;
         long saveTick = 0;
+        if (currentTick - saveTick == 60)
+            BallThink.accelerate(this);
         // Here is where the strategy should have some effect.
         // You can add parameters to the think method so the ball knows something about its
         // world to make decisions with, or you can inject things upon construction for it to query
         if (this.colour.equals(Paint.valueOf("BLACK"))){
-            return;
+
+
         }else if(this.colour.equals(Paint.valueOf("PURPLE"))){
-          //  PurpleBallThink;
             if(this.getCollide()){
                 PurpleBallThink.freeze(this);
             }
 
         }else if(this.colour.equals(Paint.valueOf("ORANGE"))){
+
             OrangeBallThink.accelerate(this);
         }
         else{
             return;
         }
-        setCollide(false);
+        saveTick = currentTick;
     }
 }
