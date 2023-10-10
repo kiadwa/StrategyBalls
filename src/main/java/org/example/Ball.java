@@ -107,4 +107,12 @@ public class Ball implements BallThink, Subject{
     public void notifyObserver() {
         this.observer.update();
     }
+
+    public Ball copy(){
+        Ball ball = new Ball(this.xPos,this.yPos,this.radius,this.colour);
+        ball.setxVel(this.xVel);
+        ball.setyVel(this.yVel);
+        ball.addObserver(this.observer);
+        return ball;
+    }
 }

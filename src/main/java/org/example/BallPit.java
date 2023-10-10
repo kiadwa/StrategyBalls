@@ -7,13 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-class BallPit {
+class BallPit implements Originator {
     private final double height;
     private final double width;
     private final double g;
     private final List<Ball> balls = new ArrayList<>();
     private long tickCount = 0;
     private final List<BallObserver> ballObservers = new ArrayList<>();
+    private Memento memento;
 
     BallPit(double width, double height, double frameDuration) {
         this.height = height;
@@ -154,5 +155,22 @@ class BallPit {
 
     public List<BallObserver> getBallObservers() {
         return this.ballObservers;
+    }
+
+    @Override
+    public Memento save() {
+        BallMemento ballMemento = new BallMemento();
+        List<Ball> ballsCopy = new ArrayList<>();
+        for(Ball ball: this.balls){
+            ballsCopy.add(ball.copy());
+        }
+        ballMemento.setBallState(ballsCopy);
+        return ballMemento;
+    }
+
+    @Override
+    public void restore(Memento memento) {
+        this.balls.clear();
+        this.balls.addAll(memento.getBallState());
     }
 }
