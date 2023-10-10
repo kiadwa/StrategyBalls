@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 
 class GameWindow {
@@ -36,6 +37,25 @@ class GameWindow {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
+    private void printBallData(){
+        gc.setFill(Paint.valueOf("black"));
+
+        gc.fillText("RED---" +
+                "xPos: "+ (int) model.getBallObservers().get(0).getObsX() +
+                " yPos: " + (int) model.getBallObservers().get(0).getObsY() +
+                " xVel: "+ (int) model.getBallObservers().get(0).getObsXvel()  +
+                " yVel: "+ (int) model.getBallObservers().get(0).getObsYvel() , 10, 350);
+        gc.fillText("BLACK---" +
+                "xPos: "+ (int) model.getBallObservers().get(1).getObsX() +
+                " yPos: " + (int) model.getBallObservers().get(1).getObsY() +
+                " xVel: "+ (int) model.getBallObservers().get(1).getObsXvel()  +
+                " yVel: "+ (int) model.getBallObservers().get(1).getObsYvel() , 10, 370);
+        gc.fillText("BLUE--" +
+                "xPos: "+ (int) model.getBallObservers().get(2).getObsX() +
+                " yPos: " + (int) model.getBallObservers().get(2).getObsY() +
+                " xVel: "+ (int) model.getBallObservers().get(2).getObsXvel()  +
+                " yVel: "+ (int) model.getBallObservers().get(2).getObsYvel() , 10, 390);
+    }
 
     private void draw() {
         model.tick();
@@ -48,6 +68,7 @@ class GameWindow {
                     ball.getyPos() - ball.getRadius(),
                     ball.getRadius() * 2,
                     ball.getRadius() * 2);
+            printBallData();
         }
     }
 }

@@ -5,6 +5,7 @@ import javafx.scene.paint.Paint;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 class BallPit {
     private final double height;
@@ -12,6 +13,7 @@ class BallPit {
     private final double g;
     private final List<Ball> balls = new ArrayList<>();
     private long tickCount = 0;
+    private final List<BallObserver> ballObservers = new ArrayList<>();
 
     BallPit(double width, double height, double frameDuration) {
         this.height = height;
@@ -19,9 +21,21 @@ class BallPit {
 
         g = 1.0 * frameDuration;
 
-        balls.add(new Ball(100, 100, 20, Paint.valueOf("ORANGE")));
-        balls.add(new Ball(200, 200, 20, Paint.valueOf("PURPLE")));
-        balls.add(new Ball(300, 300, 20, Paint.valueOf("BLACK")));
+        balls.add(new Ball(100, 100, 20, Paint.valueOf("RED")));
+        balls.add(new Ball(200, 200, 20, Paint.valueOf("BLACK")));
+        balls.add(new Ball(300, 300, 20, Paint.valueOf("BLUE")));
+
+        BallObserver redObs = new BallObserver(balls.get(0));
+        BallObserver blackObs = new BallObserver(balls.get(1));
+        BallObserver blueObs = new BallObserver(balls.get(2));
+
+        balls.get(0).addObserver(redObs);
+        balls.get(1).addObserver(blackObs);
+        balls.get(2).addObserver(blueObs);
+
+        this.ballObservers.add(redObs);
+        this.ballObservers.add(blackObs);
+        this.ballObservers.add(blueObs);
     }
 
     double getHeight() {
@@ -136,5 +150,9 @@ class BallPit {
         ballA.setyVel(ballA.getyVel() + deltaVA.getY());
         ballB.setxVel(ballB.getxVel() + deltaVB.getX());
         ballB.setyVel(ballB.getyVel() + deltaVB.getY());
+    }
+
+    public List<BallObserver> getBallObservers() {
+        return this.ballObservers;
     }
 }

@@ -2,10 +2,9 @@ package org.example;
 
 import javafx.scene.paint.Paint;
 
-import java.time.Duration;
 import java.util.Random;
 
-public class Ball implements BallThink{
+public class Ball implements BallThink, Subject{
     private double xPos;
     private double yPos;
     private double radius;
@@ -13,6 +12,7 @@ public class Ball implements BallThink{
     private double yVel;
     private Paint colour;
     private boolean collide;
+    private Observer observer;
 
     Ball(double startX, double startY, double startRadius, Paint colour) {
         this.xPos = startX;
@@ -71,7 +71,7 @@ public class Ball implements BallThink{
     }
 
     public void think(long currentTick) {
-        boolean freeze = false;
+
         long saveTick = 0;
         if (currentTick - saveTick == 60)
             BallThink.accelerate(this);
@@ -81,18 +81,30 @@ public class Ball implements BallThink{
         if (this.colour.equals(Paint.valueOf("BLACK"))){
 
 
-        }else if(this.colour.equals(Paint.valueOf("PURPLE"))){
+        }else if(this.colour.equals(Paint.valueOf("BLUE"))){
             if(this.getCollide()){
-                PurpleBallThink.freeze(this);
+                BlueBallThink.freeze(this);
             }
 
-        }else if(this.colour.equals(Paint.valueOf("ORANGE"))){
+        }else if(this.colour.equals(Paint.valueOf("RED"))){
 
-            OrangeBallThink.accelerate(this);
+            RedBallThink.accelerate(this);
         }
-        else{
-            return;
-        }
-        saveTick = currentTick;
+        notifyObserver();
+    }
+
+    @Override
+    public void addObserver(Observer obs) {
+        this.observer = obs;
+    }
+
+    @Override
+    public void removeObserver(Observer obs) {
+        this.observer = null;
+    }
+
+    @Override
+    public void notifyObserver() {
+        this.observer.update();
     }
 }
