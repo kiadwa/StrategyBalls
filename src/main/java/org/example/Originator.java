@@ -1,6 +1,6 @@
 package org.example;
 
-public interface Originator {
+public interface  Originator {
     Memento save();
     void restore(Memento memento);
 }

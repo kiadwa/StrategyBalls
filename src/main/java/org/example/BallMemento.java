@@ -1,17 +1,18 @@
 package org.example;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class BallMemento implements Memento {
-    private List<Ball> ballMementos;
+    private List<HashMap<String,Double>> ballMementos;
 
     @Override
-    public void setBallState(List<Ball> ball) {
-        this.ballMementos = ball;
+    public void setBallState(List<HashMap<String, Double>> ballMementos) {
+        this.ballMementos = ballMementos;
     }
 
     @Override
-    public List<Ball> getBallState() {
+    public List<HashMap<String, Double>> getBallState() {
         return ballMementos;
     }
 }

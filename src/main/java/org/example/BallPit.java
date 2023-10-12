@@ -2,10 +2,8 @@ package org.example;
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Paint;
-import java.util.Iterator;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 class BallPit implements Originator {
     private final double height;
@@ -14,7 +12,6 @@ class BallPit implements Originator {
     private final List<Ball> balls = new ArrayList<>();
     private long tickCount = 0;
     private final List<BallObserver> ballObservers = new ArrayList<>();
-    private Memento memento;
 
     BallPit(double width, double height, double frameDuration) {
         this.height = height;
@@ -159,18 +156,34 @@ class BallPit implements Originator {
 
     @Override
     public Memento save() {
-        BallMemento ballMemento = new BallMemento();
-        List<Ball> ballsCopy = new ArrayList<>();
+        //TODO
+        List<HashMap<String,Double>> ballMemento = new ArrayList<>();
         for(Ball ball: this.balls){
-            ballsCopy.add(ball.copy());
+            HashMap<String, Double> temp = new HashMap<>();
+            temp.put("x", ball.getxPos());
+            temp.put("y",ball.getyPos());
+            temp.put("xVel",ball.getxVel());
+            temp.put("yVel",ball.getyVel());
+            ballMemento.add(temp);
         }
-        ballMemento.setBallState(ballsCopy);
-        return ballMemento;
+
+        BallMemento result = new BallMemento();
+        result.setBallState(ballMemento);
+        return result;
     }
 
     @Override
     public void restore(Memento memento) {
-        this.balls.clear();
-        this.balls.addAll(memento.getBallState());
+        //TODO
+        List<HashMap<String,Double>> states = memento.getBallState();
+        int cnt  = 0;
+        for(HashMap<String,Double> state: states){
+            Ball ball = this.balls.get(cnt);
+            ball.setxPos(state.get("x"));
+            ball.setyPos(state.get("y"));
+            ball.setxVel(state.get("xVel"));
+            ball.setyVel(state.get("yVel"));
+            cnt ++;
+        }
     }
 }
